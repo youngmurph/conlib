@@ -1,9 +1,10 @@
 const submit = document.getElementById("submit");
-const error = "Error, you must specify a number of pages.";
+const body = document.querySelector("body");
 const title = document.getElementById("title");
 const author = document.getElementById("author");
 const pages = document.getElementById("pages");
-const card = document.getElementById("card");
+const modal = document.getElementsByClassName("modal");
+const error = "Error, you must specify a number of pages.";
 
 const myLibrary = [];
 
@@ -24,9 +25,20 @@ function addBookToLibrary(Book) {
     } else {
         read = "Not yet";
     }
+    if (myLibrary.length < 1) {
+        let modal = document.createElement('div');
+        modal.classList.add('modal');
+        body.prepend(modal);
+        modal.prepend(myLibrary);
+    }
     let newBook = new Book(bookTitle, bookAuthor, bookPages, read);
-    let bookCard = document.createElement('div');
+
     myLibrary.push(newBook);
+    for (let i = 0; i < myLibrary.length; i++) {
+        const bookCard = myLibrary[i];
+        document.querySelector('.modal').innerHTML += bookCard;
+        break;
+    }
     console.log(myLibrary);
 } 
 
@@ -37,5 +49,3 @@ submit.addEventListener("click", () => {
     pages.value = '';
     read.checked = false;
 })
-
-
